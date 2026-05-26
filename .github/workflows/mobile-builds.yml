@@ -36,6 +36,23 @@ jobs:
         run: |
           sdkmanager "platforms;android-29" "build-tools;34.0.0" "ndk;21.4.7075529"
           echo "ANDROID_NDK_ROOT=${ANDROID_HOME}/ndk/21.4.7075529" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK=${ANDROID_HOME}" >> "$GITHUB_ENV"
+
+      - name: Configure Lime Android
+        shell: bash
+        run: |
+          mkdir -p "$HOME/.lime"
+          cat > "$HOME/.lime/config.xml" <<EOF
+          <?xml version="1.0" encoding="utf-8"?>
+          <config>
+            <section id="defines">
+              <define name="ANDROID_SETUP" value="true" />
+              <define name="ANDROID_SDK" value="${ANDROID_HOME}" />
+              <define name="ANDROID_NDK_ROOT" value="${ANDROID_NDK_ROOT}" />
+              <define name="JAVA_HOME" value="${JAVA_HOME}" />
+            </section>
+          </config>
+          EOF
 
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
