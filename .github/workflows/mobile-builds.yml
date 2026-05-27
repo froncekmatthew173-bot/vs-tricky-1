@@ -76,7 +76,7 @@ jobs:
           haxelib git extension-webm https://github.com/KadeDev/extension-webm
 
       - name: Rebuild extension-webm
-        run: haxelib run lime rebuild extension-webm android
+        run: haxelib run lime rebuild extension-webm android HXCPP_ARM64
         
       - name: Build Android
         run: haxelib run lime build android -release
