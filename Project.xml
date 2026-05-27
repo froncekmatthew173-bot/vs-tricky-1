@@ -92,10 +92,13 @@
 	<haxelib name="flixel-ui" />
 	<haxelib name="actuate" />
 	<haxelib name="newgrounds"/>
-	<haxelib name="extension-webm"/>
 	<haxelib name="extension-androidtools" if="android"/>
 	<haxelib name="faxe" if='switch'/>
 	<haxelib name="polymod"/>
+	<haxelib name="extension-webm" unless="ios"/>
+    <haxedef name="no-webm" if="ios"/>
+    <haxedef name="video_mp4" if="ios"/>
+
 	<!-- <haxelib name="hxcpp-debug-server" if="desktop"/> -->
 
 	<!-- <haxelib name="markdown" /> -->
