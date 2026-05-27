@@ -50,8 +50,8 @@ jobs:
       - name: Install Haxelibs
         shell: bash
         run: |
-          haxelib install lime 7.9.0
-          haxelib install openfl 9.0.2
+          haxelib git lime https://github.com/FunkinCrew/lime 6421de16b9dfa4fb55c19f12db65d392a57585c8
+          haxelib git openfl https://github.com/FunkinCrew/openfl a85b45f21c7e1a4c19663a193bf4ea961faf0dfa
           haxelib install hxcpp
           haxelib install flixel 4.11.0
           haxelib install flixel-addons 2.8.0
@@ -139,8 +139,8 @@ jobs:
       - name: Install Haxelibs
         shell: bash
         run: |
-          haxelib install lime 7.9.0
-          haxelib install openfl 9.0.2
+          haxelib git lime https://github.com/FunkinCrew/lime 6421de16b9dfa4fb55c19f12db65d392a57585c8
+          haxelib git openfl https://github.com/FunkinCrew/openfl a85b45f21c7e1a4c19663a193bf4ea961faf0dfa
           haxelib install hxcpp
           haxelib install flixel 4.11.0
           haxelib install flixel-addons 2.8.0
@@ -191,8 +191,8 @@ jobs:
       - name: Install Haxelibs
         shell: bash
         run: |
-          haxelib install lime 7.9.0
-          haxelib install openfl 9.0.2
+          haxelib git lime https://github.com/FunkinCrew/lime 6421de16b9dfa4fb55c19f12db65d392a57585c8
+          haxelib git openfl https://github.com/FunkinCrew/openfl a85b45f21c7e1a4c19663a193bf4ea961faf0dfa
           haxelib install hxcpp
           haxelib install flixel 4.11.0
           haxelib install flixel-addons 2.8.0
