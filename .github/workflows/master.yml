@@ -114,6 +114,7 @@ jobs:
           sdkmanager "platforms;android-29" "build-tools;34.0.0" "ndk;21.4.7075529"
           echo "ANDROID_NDK_ROOT=${ANDROID_HOME}/ndk/21.4.7075529" >> "$GITHUB_ENV"
           echo "ANDROID_SDK=${ANDROID_HOME}" >> "$GITHUB_ENV"
+
       - name: Configure Lime Android
         shell: bash
         run: |
@@ -129,6 +130,7 @@ jobs:
             </section>
           </config>
           EOF
+
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
@@ -149,9 +151,10 @@ jobs:
           haxelib install polymod 1.5.2
           haxelib git extension-androidtools https://github.com/jigsaw-4277821/extension-androidtools.git
           haxelib git extension-webm https://github.com/KadeDev/extension-webm
+
       - name: Rebuild extension-webm
         run: haxelib run lime rebuild extension-webm android HXCPP_ARM64
-        
+
       - name: Build Android
         run: haxelib run lime build android -release
 
@@ -165,6 +168,7 @@ jobs:
             exit 1
           fi
           cp "$apk" release/trickster-android.apk
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -198,6 +202,7 @@ jobs:
           haxelib install newgrounds 1.1.5
           haxelib install polymod 1.5.2
           haxelib git extension-webm https://github.com/KadeDev/extension-webm
+
       - name: Rebuild extension-webm
         run: haxelib run lime rebuild extension-webm ios
 
@@ -210,6 +215,7 @@ jobs:
           mkdir -p release
           ipa="$(find export/release/ios -name '*.ipa' | head -n 1)"
           app="$(find export/release/ios -name '*.app' -type d | head -n 1)"
+
           if [[ -n "$ipa" ]]; then
             cp "$ipa" release/trickster-ios.ipa
           elif [[ -n "$app" ]]; then
@@ -218,6 +224,7 @@ jobs:
             echo "No iOS app or IPA found."
             exit 1
           fi
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -228,7 +235,10 @@ jobs:
 
   release:
     name: Upload release
-    needs: build
+    needs:
+      - build
+      - android
+      - ios
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
 
@@ -249,8 +259,8 @@ jobs:
             echo "release_name=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
             echo "prerelease=false" >> "$GITHUB_OUTPUT"
           else
-            echo "tag_name=desktop-builds-latest" >> "$GITHUB_OUTPUT"
-            echo "release_name=Desktop Builds Latest" >> "$GITHUB_OUTPUT"
+            echo "tag_name=builds-latest" >> "$GITHUB_OUTPUT"
+            echo "release_name=Builds Latest" >> "$GITHUB_OUTPUT"
             echo "prerelease=true" >> "$GITHUB_OUTPUT"
           fi
 
@@ -261,4 +271,4 @@ jobs:
           name: ${{ steps.release.outputs.release_name }}
           prerelease: ${{ steps.release.outputs.prerelease }}
           overwrite_files: true
-          files: release-assets/*.zip
+          files: release-assets/*
